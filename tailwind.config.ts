@@ -13,8 +13,15 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      boxShadow: {
+        headerShadow: "rgb(0 0 0 / 8%) 0px 2.5px 1px",
+      },
+      colors: {
+        card: "#f0f0f0",
+        lightTags: "#7eabcf",
+      },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };
 export default config;
