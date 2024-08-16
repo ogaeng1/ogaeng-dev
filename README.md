@@ -4,6 +4,6 @@
 ### 무엇을 활용했나요
 |Framework|Next.js 14|
 |---|---|
-|Langauage|TypeScript|
+|Language|TypeScript|
 |Style|Tailwindcss|
 |etc|gray-matter <br /> front-matter <br/> remark <br /> remark-html|
