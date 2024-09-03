@@ -1,54 +1,56 @@
 import fs from "fs";
 import path from "path";
-import matter from "gray-matter";
-import { remark } from "remark";
-import html from "remark-html";
 
-const postDirectory = path.join("__posts");
-
-export function sortedPost() {
-  const fileNames = fs.readdirSync(postDirectory);
-
-  const getAllPosts = fileNames.map((fileName) => {
-    const id = fileName.replace(/\.mdx$/, "");
-    const fullPath = path.join(postDirectory, fileName);
-    const contents = fs.readFileSync(fullPath, "utf8");
-
-    const matterResult = matter(contents);
-    const blogPost: BlogPost = {
-      id,
-      title: matterResult.data.title,
-      date: matterResult.data.date,
-      description: matterResult.data.description,
-      tags: matterResult.data.tags,
-      thumnail: matterResult.data.thumnail,
-    };
-
-    return blogPost;
-  });
-
-  return getAllPosts.sort((a, b) => (a.date < b.date ? 1 : -1));
+interface Metadata {
+  title: string;
+  date: string;
+  summary: string;
+  tags: string[];
+  thumnail: string;
 }
 
-export async function getPostDetail(id: string) {
-  const fullPath = path.join(postDirectory, `${id}.mdx`);
-  const contents = fs.readFileSync(fullPath, "utf8");
-  const matterResult = matter(contents);
+const ROOT_DIR = path.join(process.cwd(), "posts");
 
-  const processedContent = await remark()
-    .use(html)
-    .process(matterResult.content);
-  const contentHtml = processedContent.toString();
+const parseFrontmatter = (mdxContent: string) => {
+  const frontmatterRegEx = /---\s*([\s\S]*?)\s*---/;
+  const matchedFrontMatter = frontmatterRegEx.exec(mdxContent)?.at(1) as string;
+  const content = mdxContent.replace(frontmatterRegEx, "").trim();
+  const frontMatterLines = matchedFrontMatter?.trim().split("\n");
 
-  const blogWithHtml: BlogPost & { contentHtml: string } = {
-    id,
-    title: matterResult.data.title,
-    date: matterResult.data.date,
-    description: matterResult.data.description,
-    tags: matterResult.data.tags,
-    thumnail: matterResult.data.thumnail,
-    contentHtml,
-  };
+  const metadata = frontMatterLines.reduce((acc, line) => {
+    const [key, value] = line.split(":").map((str) => str.trim());
 
-  return blogWithHtml;
-}
+    if (key === "tags") {
+      return { ...acc, [key]: JSON.parse(value.replace(/'/g, '"')) };
+    }
+
+    return { ...acc, [key]: value.replaceAll('"', "") };
+  }, {} as Metadata);
+
+  return { metadata, content };
+};
+
+const getMdxFiles = () =>
+  fs.readdirSync(ROOT_DIR).filter((file) => path.extname(file) === ".mdx");
+
+const readMdxFile = (filePath: string) => {
+  const mdxContent = fs.readFileSync(filePath, "utf8");
+
+  return parseFrontmatter(mdxContent);
+};
+
+export const getAllPosts = () => {
+  const mdxFiles = getMdxFiles();
+
+  return mdxFiles
+    .map((file) => {
+      const { metadata, content } = readMdxFile(path.join(ROOT_DIR, file));
+      const slug = path.basename(file, ".mdx");
+      return { metadata, content, slug };
+    })
+    .sort(
+      (a, b) =>
+        new Date(b.metadata.date).getTime() -
+        new Date(a.metadata.date).getTime()
+    );
+};
