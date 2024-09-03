@@ -24,7 +24,7 @@ const Giscus = () => {
     scriptElement.setAttribute("data-reactions-enabled", "1");
     scriptElement.setAttribute("data-emit-metadata", "0");
     scriptElement.setAttribute("data-input-position", "bottom");
-    scriptElement.setAttribute("data-theme", "dark");
+    scriptElement.setAttribute("data-theme", "dark_tritanopia");
     scriptElement.setAttribute("data-lang", "ko");
     scriptElement.setAttribute("data-loading", "lazy");
     scriptElement.setAttribute("crossorigin", "anonymous");
@@ -35,7 +35,7 @@ const Giscus = () => {
 
   if (!mounted) return null;
 
-  return <div className="mt-20" ref={ref} />;
+  return <div className="mt-20 text-black" ref={ref} />;
 };
 
 export default Giscus;
