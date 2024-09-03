@@ -1,9 +1,11 @@
-import PostList from "@/components/PostList";
+import PostPage from "@/components/Post/PostList";
+import { getAllPosts } from "@/lib/posts";
 
 export default function Home() {
+  const post = getAllPosts();
   return (
     <main>
-      <PostList />
+      <PostPage post={post} />
     </main>
   );
 }
