@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import PostPage from "@/components/Post/PostList";
 import { getAllPosts } from "@/lib/posts";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "오갱 블로그",
@@ -10,8 +11,10 @@ export const metadata: Metadata = {
 export default function Home() {
   const post = getAllPosts();
   return (
-    <main>
-      <PostPage post={post} />
-    </main>
+    <Suspense fallback={<div>로딩</div>}>
+      <main>
+        <PostPage post={post} />
+      </main>
+    </Suspense>
   );
 }
