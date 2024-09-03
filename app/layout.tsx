@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Header from "@/components/Ui/Header";
@@ -5,6 +6,12 @@ import Footer from "@/components/Ui/Footer";
 import ThemeProviders from "@/components/Theme";
 
 const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  icons: {
+    icon: "/icon.png",
+  },
+};
 
 export default function RootLayout({
   children,
