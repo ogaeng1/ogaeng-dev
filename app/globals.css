@@ -4,4 +4,20 @@
 
 * {
   margin: 0px;
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e4e6e8;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2196f3;
+  border-radius: 5px;
 }
