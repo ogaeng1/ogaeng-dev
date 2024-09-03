@@ -25,7 +25,7 @@ export async function generateMetadata({
   const { title, date, summary, thumnail } = post.metadata;
 
   return {
-    title,
+    title: `오갱 블로그 - ${title}`,
     description: summary,
     openGraph: {
       title: { absolute: title },

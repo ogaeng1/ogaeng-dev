@@ -1,4 +1,10 @@
+import { Metadata } from "next";
 import Giscus from "@/components/Giscus";
+
+export const metadata: Metadata = {
+  title: "오갱 블로그 | 방명록",
+  description: "오갱 블로그 방명록입니다.",
+};
 
 const Guestbook = () => {
   return (
