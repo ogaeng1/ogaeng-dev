@@ -20,12 +20,12 @@ const CategoryList = ({ post }: PostProps) => {
         <Link
           key={tag}
           href={tag === "All" ? "/" : `/?category=${tag}`}
-          className="mb-3"
+          className="mb-3 text-2xl"
         >
           <div
             className={`w-full text-md border rounded-md h-[36px] flex items-center gap-2 px-3 text-center ${
               query === tag || (query === null && tag === "All")
-                ? "bg-darkTags text-white"
+                ? "bg-darkTags text-white border-none"
                 : ""
             }`}
           >
