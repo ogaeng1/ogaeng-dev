@@ -51,7 +51,7 @@ const PostDetail = ({ params }: { params: { slug: string } }) => {
   }
 
   return (
-    <main className="prose mx-auto max-w-[672px] px-5">
+    <main className="prose mx-auto max-w-[782px] px-5">
       <div className="mt-10 text-center">
         <div className="dark:text-slate-300 text-2xl">
           {getFormattedDate(post.metadata.date)}
